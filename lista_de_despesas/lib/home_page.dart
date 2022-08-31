@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lista_de_despesas/componentes/botao.dart';
+import 'package:lista_de_despesas/componentes/transacao_do_usuario.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,6 +21,9 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              const Text(
+                'Valor Toral: ',
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
                 child: ClipRRect(
@@ -29,34 +34,41 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.blueGrey,
                     child: const Padding(
                       padding: EdgeInsets.all(10),
-                      child: Text('R\$'),
+                      child: Text('R\$ '),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Container(
-                  color: Colors.blue,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Container(
-                        child: Text('Olá'),
-                      )
-                    ],
-                  ),
+          const TransacaoDoUsuario(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Botao(
+                  texto: 'Adicionar item',
+                  aoPressionar: () {
+                    print('Item adicionado');
+                  },
                 ),
               ),
-            ),
-          ),
-          Row(
-            children: [],
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: FloatingActionButton(
+                  child: const Icon(Icons.add),
+                  onPressed: () {},
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Botao(
+                      texto: 'Remover Item',
+                      aoPressionar: () {
+                        print('Item removido');
+                      })),
+            ],
           ),
         ],
       ),

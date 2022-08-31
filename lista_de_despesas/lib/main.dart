@@ -11,9 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData.light().copyWith(
+        appBarTheme: const AppBarTheme(
+          color: Colors.blue,
+        ),
+        scaffoldBackgroundColor: Colors.white24,
+      ),
       title: 'Lista de Despesas',
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
