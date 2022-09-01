@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_despesas/componentes/botao.dart';
-import 'package:lista_de_despesas/componentes/transacao_do_usuario.dart';
+import 'package:lista_de_despesas/componentes/formulario.dart';
+import '../models/item_da_compra.dart';
+import '../componentes/lista_compra.dart';
+import '../componentes/formulario.dart';
+import 'dart:math';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,6 +14,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<ItemDaCompra> itens = [
+    ItemDaCompra(
+      id: 'c1',
+      nomeDoItem: 'Arroz',
+      quantidade: 1,
+      valor: 10.00,
+    ),
+    ItemDaCompra(
+      id: 'c2',
+      nomeDoItem: 'Feijão',
+      quantidade: 1,
+      valor: 5.00,
+    ),
+  ];
+
+  addTransacao(String nome, double valorItem) {
+    final novoItem = ItemDaCompra(
+      id: Random().nextDouble().toString(),
+      nomeDoItem: nome,
+      quantidade: 1,
+      valor: valorItem,
+    );
+
+    setState(() {
+      itens.add(novoItem);
+    });
+
+    Navigator.of(context).pop();
+  }
+
+  openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return Formulario(onSubmit: addTransacao);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,33 +83,17 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          const TransacaoDoUsuario(),
+          ListaCompra(itens: itens),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(15),
-                child: Botao(
-                  texto: 'Adicionar item',
-                  aoPressionar: () {
-                    print('Item adicionado');
-                  },
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.all(10),
                 child: FloatingActionButton(
                   child: const Icon(Icons.add),
-                  onPressed: () {},
+                  onPressed: () => openTransactionFormModal(context),
                 ),
               ),
-              Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Botao(
-                      texto: 'Remover Item',
-                      aoPressionar: () {
-                        print('Item removido');
-                      })),
             ],
           ),
         ],

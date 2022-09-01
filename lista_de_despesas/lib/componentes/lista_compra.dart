@@ -23,7 +23,6 @@ class ListaCompra extends StatelessWidget {
                 return CardDeCompra(
                   titulo: tr.nomeDoItem,
                   valor: tr.valor,
-                  quantidade: tr.quantidade,
                   pego: false,
                 );
               },

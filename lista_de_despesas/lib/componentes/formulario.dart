@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'botao.dart';
 
-class Formulario extends StatelessWidget {
-  final itemController = TextEditingController();
-  final valorController = TextEditingController();
-
+class Formulario extends StatefulWidget {
   final void Function(String, double) onSubmit;
 
-  Formulario(this.onSubmit, {Key? key}) : super(key: key);
+  const Formulario({required this.onSubmit, Key? key}) : super(key: key);
+
+  @override
+  State<Formulario> createState() => _FormularioState();
+}
+
+class _FormularioState extends State<Formulario> {
+  final itemController = TextEditingController();
+
+  final valorController = TextEditingController();
 
   submeterFormulario() {
     final nomeItem = itemController.text;
@@ -17,58 +23,51 @@ class Formulario extends StatelessWidget {
       return;
     }
 
-    onSubmit(nomeItem, valorItem);
+    widget.onSubmit(nomeItem, valorItem);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: itemController,
-                onSubmitted: (_) => submeterFormulario(),
-                decoration: const InputDecoration(labelText: 'Item: '),
+    return Card(
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: itemController,
+              onSubmitted: (_) => submeterFormulario(),
+              decoration: const InputDecoration(labelText: 'Item: '),
+            ),
+            TextField(
+              controller: valorController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submeterFormulario(),
+              decoration: const InputDecoration(labelText: 'Valor (R\$)'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10, top: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Botao(
+                    texto: 'Cancelar',
+                    aoPressionar: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  const SizedBox(
+                    width: 150,
+                  ),
+                  Botao(
+                    texto: 'Adicionar',
+                    aoPressionar: submeterFormulario,
+                  ),
+                ],
               ),
-              TextField(
-                controller: valorController,
-                keyboardType: TextInputType.number,
-                onSubmitted: (_) => submeterFormulario(),
-                decoration: const InputDecoration(labelText: 'Valor (R\$)'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10, top: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Botao(
-                      texto: 'Adicionar',
-                      aoPressionar: submeterFormulario,
-                    ),
-                    const SizedBox(
-                      width: 150,
-                    ),
-                    Botao(
-                      texto: '+',
-                      aoPressionar: () {},
-                    ),
-                    const SizedBox(
-                      width: 50,
-                    ),
-                    Botao(
-                      texto: '-',
-                      aoPressionar: () {},
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

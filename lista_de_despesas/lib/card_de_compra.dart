@@ -5,14 +5,13 @@ import 'models/constantes.dart';
 class CardDeCompra extends StatefulWidget {
   String titulo;
   double valor;
-  int quantidade;
+  int quantidade = 1;
   bool pego = false;
 
   CardDeCompra({
     Key? key,
     required this.titulo,
     required this.valor,
-    required this.quantidade,
     required this.pego,
   }) : super(key: key);
 
@@ -21,7 +20,33 @@ class CardDeCompra extends StatefulWidget {
 }
 
 class _CardDeCompraState extends State<CardDeCompra> {
-  bool valor = true;
+  void adicionarItem() {
+    setState(() {
+      widget.quantidade++;
+    });
+  }
+
+  void removeItem() {
+    setState(() {
+      widget.quantidade--;
+    });
+  }
+
+  late double novoValor = widget.valor;
+
+  void somarValorDoItem() {
+    setState(() {
+      widget.valor += novoValor;
+    });
+  }
+
+  void subitrairValorDoItem() {
+    setState(() {
+      widget.valor -= novoValor;
+    });
+  }
+
+  //bool valor = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,31 +99,58 @@ class _CardDeCompraState extends State<CardDeCompra> {
           ),
         ),
         Expanded(
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Container(
-              margin: const EdgeInsets.only(
-                left: 30,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  width: 2,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                    left: 30,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2,
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(5),
+                  child: Text(
+                    'R\$: ${widget.valor.toStringAsFixed(2)}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              padding: const EdgeInsets.all(5),
-              child: Text(
-                'R\$: ${widget.valor.toStringAsFixed(2)}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(right: 80),
-              child: Text(
-                'Qtdd:  ${widget.quantidade}',
-              ),
-            )
-          ]),
+                Padding(
+                  padding: const EdgeInsets.only(left: 100),
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 50),
+                    child: Text(
+                      'Qtdd:  ${widget.quantidade}',
+                    ),
+                  ),
+                ),
+                TextButton.icon(
+                    onPressed: () {
+                      adicionarItem();
+                      somarValorDoItem();
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
+                    label: const Text('')),
+                TextButton.icon(
+                    onPressed: widget.quantidade < 2
+                        ? null
+                        : () {
+                            removeItem();
+                            subitrairValorDoItem();
+                          },
+                    icon: const Icon(
+                      Icons.minimize,
+                      color: Colors.black,
+                    ),
+                    label: const Text('')),
+              ]),
         ),
       ]),
     );
