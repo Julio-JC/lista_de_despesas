@@ -46,7 +46,13 @@ class _CardDeCompraState extends State<CardDeCompra> {
     });
   }
 
-  //bool valor = true;
+  double valorT = 0.0;
+  valorTotal() {
+    setState(() {
+      valorT = widget.valor;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,17 +68,16 @@ class _CardDeCompraState extends State<CardDeCompra> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: const EdgeInsets.only(
-                  left: 30,
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    left: 30,
+                  ),
+                  child: Text(
+                    widget.titulo,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-                child: Text(
-                  widget.titulo,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 300,
               ),
               const Icon(Icons.local_grocery_store_outlined),
               Container(
@@ -82,9 +87,9 @@ class _CardDeCompraState extends State<CardDeCompra> {
                 child: Checkbox(
                   value: widget.pego,
                   activeColor: Colors.blue,
-                  onChanged: (valor) {
+                  onChanged: (pego) {
                     setState(() {
-                      widget.pego = valor!;
+                      widget.pego = pego!;
                     });
                   },
                 ),
@@ -122,7 +127,7 @@ class _CardDeCompraState extends State<CardDeCompra> {
                 Padding(
                   padding: const EdgeInsets.only(left: 100),
                   child: Container(
-                    margin: const EdgeInsets.only(right: 50),
+                    margin: const EdgeInsets.only(right: 10),
                     child: Text(
                       'Qtdd:  ${widget.quantidade}',
                     ),
@@ -132,6 +137,7 @@ class _CardDeCompraState extends State<CardDeCompra> {
                     onPressed: () {
                       adicionarItem();
                       somarValorDoItem();
+                      valorTotal();
                     },
                     icon: const Icon(
                       Icons.add,

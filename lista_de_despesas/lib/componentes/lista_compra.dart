@@ -9,27 +9,12 @@ class ListaCompra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Container(
-            color: Colors.blue,
-            child: ListView.builder(
-              itemCount: itens.length,
-              itemBuilder: (context, index) {
-                final tr = itens[index];
-                return CardDeCompra(
-                  titulo: tr.nomeDoItem,
-                  valor: tr.valor,
-                  pego: false,
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-    );
+    double soma = 0.0;
+    for (var x in itens) {
+      soma += x.valor;
+    }
+    print(soma);
+
+    return Container();
   }
 }
