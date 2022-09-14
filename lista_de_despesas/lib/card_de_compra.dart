@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'models/constantes.dart';
+import 'models/item_da_compra.dart';
 
 // ignore: must_be_immutable
 class CardDeCompra extends StatefulWidget {
   String titulo;
-  double valor;
+  double valor = 0.0;
   int quantidade = 1;
   bool pego = false;
+  late Function(bool)? noCarrinho;
 
   CardDeCompra({
     Key? key,
     required this.titulo,
     required this.valor,
     required this.pego,
+    required this.quantidade,
   }) : super(key: key);
 
   @override
@@ -20,6 +23,8 @@ class CardDeCompra extends StatefulWidget {
 }
 
 class _CardDeCompraState extends State<CardDeCompra> {
+  late ItemDaCompra itemDeCompra;
+
   void adicionarItem() {
     setState(() {
       widget.quantidade++;
@@ -32,24 +37,15 @@ class _CardDeCompraState extends State<CardDeCompra> {
     });
   }
 
-  late double novoValor = widget.valor;
-
   void somarValorDoItem() {
     setState(() {
-      widget.valor += novoValor;
+      widget.valor += itemDeCompra.valor;
     });
   }
 
   void subitrairValorDoItem() {
     setState(() {
-      widget.valor -= novoValor;
-    });
-  }
-
-  double valorT = 0.0;
-  valorTotal() {
-    setState(() {
-      valorT = widget.valor;
+      widget.valor += itemDeCompra.valor;
     });
   }
 
@@ -137,7 +133,6 @@ class _CardDeCompraState extends State<CardDeCompra> {
                     onPressed: () {
                       adicionarItem();
                       somarValorDoItem();
-                      valorTotal();
                     },
                     icon: const Icon(
                       Icons.add,

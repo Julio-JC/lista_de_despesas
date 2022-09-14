@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:lista_de_despesas/componentes/formulario.dart';
 import '../models/item_da_compra.dart';
-import '../componentes/lista_compra.dart';
 import '../componentes/formulario.dart';
 import 'dart:math';
-
 import 'card_de_compra.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<ItemDaCompra> item;
-
-  var valorItens = ItemDaCompra(
-      id: 'id', nomeDoItem: '', quantidade: 0, valor: 0.0, pego: false);
   final List<ItemDaCompra> itens = [
-    ItemDaCompra(
-      id: 'c1',
-      nomeDoItem: 'Arroz',
-      quantidade: 1,
-      valor: 10.00,
-      pego: false,
-    ),
-    ItemDaCompra(
-      id: 'c2',
-      nomeDoItem: 'Feijão',
-      quantidade: 1,
-      valor: 5.00,
-      pego: false,
-    ),
+    // ItemDaCompra(
+    //   id: 'c1',
+    //   nomeDoItem: 'Arroz',
+    //   quantidade: 1,
+    //   valor: 10.00,
+    //   estaNoCarrinho: false,
+    // ),
+    // ItemDaCompra(
+    //   id: 'c2',
+    //   nomeDoItem: 'Feijão',
+    //   quantidade: 1,
+    //   valor: 5.00,
+    //   estaNoCarrinho: false,
+    // ),
   ];
 
   addTransacao(String nome, double valorItem) {
@@ -42,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         nomeDoItem: nome,
         quantidade: 1,
         valor: valorItem,
-        pego: false);
+        estaNoCarrinho: false);
 
     setState(() {
       itens.add(novoItem);
@@ -59,13 +52,17 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  late CardDeCompra valorDoCard;
   @override
   Widget build(BuildContext context) {
-    double valoTotal = 0.0;
+    double valorTotal = 0.0;
 
     for (var x in itens) {
-      valoTotal += x.valor;
+      setState(() {
+        valorTotal += x.valor;
+      });
     }
+    print(valorTotal);
 
     return Scaffold(
       appBar: AppBar(
@@ -86,10 +83,10 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: 40,
                     width: 150,
-                    color: Colors.blueGrey,
+                    color: Colors.blueGrey[100],
                     child: Padding(
                       padding: const EdgeInsets.all(10),
-                      child: Text('R\$ ${valoTotal.toStringAsFixed(2)}'),
+                      child: Text('R\$ ${valorTotal.toStringAsFixed(2)}'),
                     ),
                   ),
                 ),
@@ -102,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
-                  color: Colors.blue,
+                  color: Colors.blueGrey[100],
                   child: ListView.builder(
                     itemCount: itens.length,
                     itemBuilder: (context, index) {
@@ -110,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                       return CardDeCompra(
                         titulo: tr.nomeDoItem,
                         valor: tr.valor,
+                        quantidade: tr.quantidade,
                         pego: false,
                       );
                     },
@@ -124,6 +122,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: FloatingActionButton(
+                  backgroundColor: Colors.deepOrange,
                   child: const Icon(Icons.add),
                   onPressed: () => openTransactionFormModal(context),
                 ),

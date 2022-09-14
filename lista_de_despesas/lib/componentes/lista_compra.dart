@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_despesas/models/item_da_compra.dart';
-import '../card_de_compra.dart';
 
 class ListaCompra extends StatelessWidget {
   final List<ItemDaCompra> itens;
