@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/constantes.dart';
+
 class Botao extends StatelessWidget {
   final String texto;
   final Function() aoPressionar;
@@ -9,6 +11,10 @@ class Botao extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: aoPressionar, child: Text(texto));
+    return ElevatedButton(
+      onPressed: aoPressionar,
+      style: ElevatedButton.styleFrom(backgroundColor: kCorDosBotoes),
+      child: Text(texto),
+    );
   }
 }

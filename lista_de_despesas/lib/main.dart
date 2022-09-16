@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white24,
       ),
       title: 'Lista de Despesas',
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }

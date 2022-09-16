@@ -3,6 +3,7 @@ import '../models/item_da_compra.dart';
 import '../componentes/formulario.dart';
 import 'dart:math';
 import 'card_de_compra.dart';
+import 'models/constantes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -33,8 +34,8 @@ class _HomePageState extends State<HomePage> {
     final novoItem = ItemDaCompra(
         id: Random().nextDouble().toString(),
         nomeDoItem: nome,
-        quantidade: 1,
         valor: valorItem,
+        quantidade: 1,
         estaNoCarrinho: false);
 
     setState(() {
@@ -50,6 +51,19 @@ class _HomePageState extends State<HomePage> {
         builder: (_) {
           return Formulario(onSubmit: addTransacao);
         });
+  }
+
+  ItemDaCompra? item;
+  void adicionarItem() {
+    setState(() {
+      item!.quantidade++;
+    });
+  }
+
+  void removerItem() {
+    setState(() {
+      item!.quantidade--;
+    });
   }
 
   late CardDeCompra valorDoCard;
@@ -83,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: 40,
                     width: 150,
-                    color: Colors.blueGrey[100],
+                    color: kCorDoContainer,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text('R\$ ${valorTotal.toStringAsFixed(2)}'),
@@ -99,7 +113,7 @@ class _HomePageState extends State<HomePage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
-                  color: Colors.blueGrey[100],
+                  color: kCorDoContainer,
                   child: ListView.builder(
                     itemCount: itens.length,
                     itemBuilder: (context, index) {
@@ -108,7 +122,9 @@ class _HomePageState extends State<HomePage> {
                         titulo: tr.nomeDoItem,
                         valor: tr.valor,
                         quantidade: tr.quantidade,
-                        pego: false,
+                        estaNoCarrinho: tr.estaNoCarrinho,
+                        adicionarItem: adicionarItem,
+                        removerItem: removerItem,
                       );
                     },
                   ),

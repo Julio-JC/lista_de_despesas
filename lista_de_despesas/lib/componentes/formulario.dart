@@ -12,7 +12,6 @@ class Formulario extends StatefulWidget {
 
 class _FormularioState extends State<Formulario> {
   final itemController = TextEditingController();
-
   final valorController = TextEditingController();
 
   submeterFormulario() {
