@@ -7,8 +7,9 @@ class CardDeCompra extends StatelessWidget {
   double valor;
   int quantidade;
   bool estaNoCarrinho = false;
-  Function() adicionarItem;
-  Function() removerItem;
+  bool isSelected;
+  final Function() adicionarItem;
+  final Function() removerItem;
 
   CardDeCompra({
     Key? key,
@@ -16,6 +17,7 @@ class CardDeCompra extends StatelessWidget {
     required this.valor,
     required this.estaNoCarrinho,
     required this.quantidade,
+    required this.isSelected,
     required this.adicionarItem,
     required this.removerItem,
   }) : super(key: key);
@@ -88,7 +90,17 @@ class CardDeCompra extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 100),
+                  padding: const EdgeInsets.only(left: 170),
+                  child: IconButton(
+                    onPressed: adicionarItem,
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
                   child: Container(
                     margin: const EdgeInsets.only(right: 10),
                     child: Text(
@@ -96,20 +108,13 @@ class CardDeCompra extends StatelessWidget {
                     ),
                   ),
                 ),
-                TextButton.icon(
-                    onPressed: adicionarItem,
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.black,
-                    ),
-                    label: const Text('')),
-                TextButton.icon(
-                    onPressed: removerItem,
-                    icon: const Icon(
-                      Icons.minimize,
-                      color: Colors.black,
-                    ),
-                    label: const Text('')),
+                IconButton(
+                  onPressed: !isSelected ? null : removerItem,
+                  icon: const Icon(
+                    Icons.minimize,
+                    color: Colors.black,
+                  ),
+                ),
               ]),
         ),
       ]),

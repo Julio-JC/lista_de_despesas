@@ -13,22 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<ItemDaCompra> itens = [
-    // ItemDaCompra(
-    //   id: 'c1',
-    //   nomeDoItem: 'Arroz',
-    //   quantidade: 1,
-    //   valor: 10.00,
-    //   estaNoCarrinho: false,
-    // ),
-    // ItemDaCompra(
-    //   id: 'c2',
-    //   nomeDoItem: 'Feijão',
-    //   quantidade: 1,
-    //   valor: 5.00,
-    //   estaNoCarrinho: false,
-    // ),
-  ];
+  final List<ItemDaCompra> itens = [];
 
   addTransacao(String nome, double valorItem) {
     final novoItem = ItemDaCompra(
@@ -53,31 +38,52 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  ItemDaCompra? item;
-  void adicionarItem() {
+  void adicionarItemDoCard(ItemDaCompra item) {
     setState(() {
-      item!.quantidade++;
+      item.quantidade++;
     });
+
+    print('${item.quantidade}');
   }
 
-  void removerItem() {
+  void removerItemDoCard(ItemDaCompra item) {
     setState(() {
-      item!.quantidade--;
+      item.quantidade--;
     });
+    print('${item.quantidade}');
   }
 
-  late CardDeCompra valorDoCard;
+  double calcularTotalDoCard(ItemDaCompra item) {
+    double total = 0;
+    setState(() {
+      for (var x in itens) {
+        if (x.nomeDoItem == item.nomeDoItem) {
+          total = item.valor++;
+        }
+      }
+    });
+    return total;
+  }
+
+  double valorTotal = 0.00;
+  double adicionarValorTotal(ItemDaCompra item) {
+    setState(() {
+      valorTotal += item.valor;
+    });
+    print(valorTotal);
+    return valorTotal;
+  }
+
+  double subtrairValorTotal(ItemDaCompra item) {
+    setState(() {
+      valorTotal -= item.valor;
+    });
+    print(valorTotal);
+    return valorTotal;
+  }
+
   @override
   Widget build(BuildContext context) {
-    double valorTotal = 0.0;
-
-    for (var x in itens) {
-      setState(() {
-        valorTotal += x.valor;
-      });
-    }
-    print(valorTotal);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Despesas'),
@@ -123,8 +129,16 @@ class _HomePageState extends State<HomePage> {
                         valor: tr.valor,
                         quantidade: tr.quantidade,
                         estaNoCarrinho: tr.estaNoCarrinho,
-                        adicionarItem: adicionarItem,
-                        removerItem: removerItem,
+                        isSelected: tr.quantidade <= 1 ? false : true,
+                        adicionarItem: () {
+                          adicionarItemDoCard(tr);
+                          adicionarValorTotal(tr);
+                          print('Acicionar item');
+                        },
+                        removerItem: () {
+                          removerItemDoCard(tr);
+                          subtrairValorTotal(tr);
+                        },
                       );
                     },
                   ),
