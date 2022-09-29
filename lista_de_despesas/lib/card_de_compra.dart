@@ -90,7 +90,7 @@ class CardDeCompra extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 170),
+                  padding: const EdgeInsets.only(left: 70),
                   child: IconButton(
                     onPressed: adicionarItem,
                     icon: const Icon(
@@ -102,7 +102,7 @@ class CardDeCompra extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Container(
-                    margin: const EdgeInsets.only(right: 10),
+                    margin: const EdgeInsets.only(right: 5),
                     child: Text(
                       'Qtdd:  $quantidade',
                     ),

@@ -14,6 +14,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<ItemDaCompra> itens = [];
+  final ItemDaCompra itemDaCompra = ItemDaCompra(
+    id: '',
+    nomeDoItem: '',
+    valor: 0.00,
+    quantidade: 0,
+    estaNoCarrinho: false,
+  );
+
+  double valorTotal = 0.00;
 
   addTransacao(String nome, double valorItem) {
     final novoItem = ItemDaCompra(
@@ -25,6 +34,7 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       itens.add(novoItem);
+      valorTotal += valorItem;
     });
 
     Navigator.of(context).pop();
@@ -65,7 +75,6 @@ class _HomePageState extends State<HomePage> {
     return total;
   }
 
-  double valorTotal = 0.00;
   double adicionarValorTotal(ItemDaCompra item) {
     setState(() {
       valorTotal += item.valor;
@@ -93,8 +102,19 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text(
-                'Valor Toral: ',
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Text('Itens ${itens.length} no carrinho'),
+              ),
+              const SizedBox(
+                width: 45,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(
+                  'Valor Toral: ',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
@@ -123,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                     itemCount: itens.length,
                     itemBuilder: (context, index) {
-                      final tr = itens[index];
+                      final ItemDaCompra tr = itens[index];
                       return CardDeCompra(
                         titulo: tr.nomeDoItem,
                         valor: tr.valor,
@@ -133,7 +153,6 @@ class _HomePageState extends State<HomePage> {
                         adicionarItem: () {
                           adicionarItemDoCard(tr);
                           adicionarValorTotal(tr);
-                          print('Acicionar item');
                         },
                         removerItem: () {
                           removerItemDoCard(tr);

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           color: Colors.deepOrange,
         ),
-        scaffoldBackgroundColor: Colors.white24,
+        scaffoldBackgroundColor: Colors.white,
       ),
       title: 'Lista de Despesas',
       home: const HomePage(),
