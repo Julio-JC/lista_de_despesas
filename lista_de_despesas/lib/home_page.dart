@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lista_de_despesas/componentes/botao.dart';
 import '../models/item_da_compra.dart';
 import '../componentes/formulario.dart';
 import 'dart:math';
@@ -52,15 +53,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       item.quantidade++;
     });
-
-    print('${item.quantidade}');
   }
 
   void removerItemDoCard(ItemDaCompra item) {
     setState(() {
       item.quantidade--;
     });
-    print('${item.quantidade}');
   }
 
   double calcularTotalDoCard(ItemDaCompra item) {
@@ -79,7 +77,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       valorTotal += item.valor;
     });
-    print(valorTotal);
+
     return valorTotal;
   }
 
@@ -87,7 +85,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       valorTotal -= item.valor;
     });
-    print(valorTotal);
     return valorTotal;
   }
 
@@ -103,11 +100,13 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text('Itens ${itens.length} no carrinho'),
+                padding: const EdgeInsets.only(top: 10),
+                child: itens.length <= 1
+                    ? Text('Tem ${itens.length} item no carrinho')
+                    : Text('Tem ${itens.length} itens no carrinho'),
               ),
               const SizedBox(
-                width: 45,
+                width: 15,
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 10),
@@ -149,6 +148,7 @@ class _HomePageState extends State<HomePage> {
                         valor: tr.valor,
                         quantidade: tr.quantidade,
                         estaNoCarrinho: tr.estaNoCarrinho,
+                        onDelete: onDelete,
                         isSelected: tr.quantidade <= 1 ? false : true,
                         adicionarItem: () {
                           adicionarItemDoCard(tr);
@@ -166,8 +166,18 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Botao(
+                      texto: 'Limpar Tudo',
+                      aoPressionar: () {
+                        setState(() {
+                          itens.clear();
+                          valorTotal = 0.00;
+                        });
+                      })),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: FloatingActionButton(
@@ -181,5 +191,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  void onDelete(ItemDaCompra itemDaCompra) {
+    itens.remove(itemDaCompra);
   }
 }
