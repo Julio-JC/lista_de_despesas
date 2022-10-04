@@ -61,18 +61,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  double calcularTotalDoCard(ItemDaCompra item) {
-    double total = 0;
-    setState(() {
-      for (var x in itens) {
-        if (x.nomeDoItem == item.nomeDoItem) {
-          total = item.valor++;
-        }
-      }
-    });
-    return total;
-  }
-
   double adicionarValorTotal(ItemDaCompra item) {
     setState(() {
       valorTotal += item.valor;
@@ -144,10 +132,7 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       final ItemDaCompra tr = itens[index];
                       return CardDeCompra(
-                        titulo: tr.nomeDoItem,
-                        valor: tr.valor,
-                        quantidade: tr.quantidade,
-                        estaNoCarrinho: tr.estaNoCarrinho,
+                        itemDaCompra: tr,
                         onDelete: onDelete,
                         isSelected: tr.quantidade <= 1 ? false : true,
                         adicionarItem: () {
@@ -194,6 +179,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onDelete(ItemDaCompra itemDaCompra) {
-    itens.remove(itemDaCompra);
+    setState(() {
+      itens.remove(itemDaCompra);
+      valorTotal = valorTotal - itemDaCompra.valor * itemDaCompra.quantidade;
+    });
   }
 }

@@ -5,9 +5,7 @@ import 'models/constantes.dart';
 
 // ignore: must_be_immutable
 class CardDeCompra extends StatelessWidget {
-  String titulo;
-  double valor;
-  int quantidade;
+  ItemDaCompra itemDaCompra;
   bool estaNoCarrinho = false;
   bool isSelected;
   final Function(ItemDaCompra) onDelete;
@@ -16,10 +14,7 @@ class CardDeCompra extends StatelessWidget {
 
   CardDeCompra({
     Key? key,
-    required this.titulo,
-    required this.valor,
-    required this.estaNoCarrinho,
-    required this.quantidade,
+    required this.itemDaCompra,
     required this.isSelected,
     required this.onDelete,
     required this.adicionarItem,
@@ -37,7 +32,9 @@ class CardDeCompra extends StatelessWidget {
             icon: Icons.delete,
             label: 'Delete',
             backgroundColor: Colors.red,
-            onPressed: (context) {},
+            onPressed: (context) {
+              onDelete(itemDaCompra);
+            },
           )
         ]),
         child: Container(
@@ -58,8 +55,9 @@ class CardDeCompra extends StatelessWidget {
                         left: 30,
                       ),
                       child: Text(
-                        titulo,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        itemDaCompra.nomeDoItem,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
                   ),
@@ -100,7 +98,7 @@ class CardDeCompra extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.all(5),
                       child: Text(
-                        'R\$: ${valor.toStringAsFixed(2)}',
+                        'R\$: ${itemDaCompra.valor.toStringAsFixed(2)}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -119,7 +117,7 @@ class CardDeCompra extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(right: 5),
                         child: Text(
-                          'Qtdd:  $quantidade',
+                          'Qtdd:  ${itemDaCompra.quantidade}',
                         ),
                       ),
                     ),
