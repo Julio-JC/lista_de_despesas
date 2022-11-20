@@ -13,7 +13,7 @@ class Botao extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: aoPressionar,
-      style: ElevatedButton.styleFrom(backgroundColor: kCorDosBotoes),
+      style: ElevatedButton.styleFrom(backgroundColor: Constants.kCorDosBotoes),
       child: Text(texto),
     );
   }

@@ -15,14 +15,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<ItemDaCompra> itens = [];
-  final ItemDaCompra itemDaCompra = ItemDaCompra(
-    id: '',
-    nomeDoItem: '',
-    valor: 0.00,
-    quantidade: 0,
-    estaNoCarrinho: false,
-  );
-
   double valorTotal = 0.00;
 
   addTransacao(String nome, double valorItem) {
@@ -110,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: 40,
                     width: 150,
-                    color: kCorDoContainer,
+                    color: Constants.kCorDoContainer,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text('R\$ ${valorTotal.toStringAsFixed(2)}'),
@@ -126,7 +118,7 @@ class _HomePageState extends State<HomePage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
-                  color: kCorDoContainer,
+                  color: Constants.kCorDoContainer,
                   child: ListView.builder(
                     itemCount: itens.length,
                     itemBuilder: (context, index) {
@@ -158,10 +150,7 @@ class _HomePageState extends State<HomePage> {
                   child: Botao(
                       texto: 'Limpar Tudo',
                       aoPressionar: () {
-                        setState(() {
-                          itens.clear();
-                          valorTotal = 0.00;
-                        });
+                        showDeleteListConfirmationDialog();
                       })),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -183,5 +172,33 @@ class _HomePageState extends State<HomePage> {
       itens.remove(itemDaCompra);
       valorTotal = valorTotal - itemDaCompra.valor * itemDaCompra.quantidade;
     });
+  }
+
+  void showDeleteListConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Apagar Tudo ?'),
+        content: const Text('Tem certeza que quer apagar toda a lista ?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(context);
+            },
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                itens.clear();
+                valorTotal = 0.00;
+              });
+              Navigator.of(context).pop(context);
+            },
+            child: const Text('Apagar Tudo'),
+          ),
+        ],
+      ),
+    );
   }
 }
