@@ -17,6 +17,9 @@ class _HomePageState extends State<HomePage> {
   final List<ItemDaCompra> itens = [];
   double valorTotal = 0.00;
 
+  late ItemDaCompra itemDeletado;
+  int? posicaoDoItemDeletado;
+
   addTransacao(String nome, double valorItem) {
     final novoItem = ItemDaCompra(
         id: Random().nextDouble().toString(),
@@ -41,6 +44,7 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  int? qtddItens;
   void adicionarItemDoCard(ItemDaCompra item) {
     setState(() {
       item.quantidade++;
@@ -73,6 +77,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Despesas'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepOrange,
+        child: const Icon(Icons.add),
+        onPressed: () => openTransactionFormModal(context),
       ),
       body: Column(
         children: [
@@ -143,21 +152,15 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Botao(
-                      texto: 'Limpar Tudo',
-                      aoPressionar: () {
-                        showDeleteListConfirmationDialog();
-                      })),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: FloatingActionButton(
-                  backgroundColor: Colors.deepOrange,
-                  child: const Icon(Icons.add),
-                  onPressed: () => openTransactionFormModal(context),
+                padding: const EdgeInsets.all(Constants.clearButtonSideSpace),
+                child: Botao(
+                  texto: 'Limpar Tudo',
+                  aoPressionar: () {
+                    showDeleteListConfirmationDialog();
+                  },
                 ),
               ),
             ],
@@ -168,10 +171,34 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onDelete(ItemDaCompra itemDaCompra) {
+    itemDeletado = itemDaCompra;
+    posicaoDoItemDeletado = itens.indexOf(itemDaCompra);
+
     setState(() {
       itens.remove(itemDaCompra);
       valorTotal = valorTotal - itemDaCompra.valor * itemDaCompra.quantidade;
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Item ${itemDaCompra.nomeDoItem} foi removido',
+          style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+        backgroundColor: Constants.kCorDaSnackBar,
+        action: SnackBarAction(
+          label: 'Desfazer',
+          textColor: Constants.kCorDosBotoes,
+          onPressed: () {
+            setState(() {
+              itens.insert(posicaoDoItemDeletado!, itemDeletado);
+              valorTotal =
+                  valorTotal + itemDaCompra.valor * itemDaCompra.quantidade;
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void showDeleteListConfirmationDialog() {
