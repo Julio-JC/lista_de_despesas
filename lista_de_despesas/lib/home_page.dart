@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Item ${itemDaCompra.nomeDoItem} foi removido',
+          'Item ${itemDaCompra.nomeDoItem} foi removido!',
           style: const TextStyle(fontWeight: FontWeight.w700),
         ),
         backgroundColor: Constants.kCorDaSnackBar,
