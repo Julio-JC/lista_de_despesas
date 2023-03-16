@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<ItemDaCompra> itens = [];
+  List<ItemDaCompra> itens = [];
   double valorTotal = 0.00;
 
   late ItemDaCompra itemDeletado;
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                     itemCount: itens.length,
                     itemBuilder: (context, index) {
-                      final ItemDaCompra tr = itens[index];
+                      final ItemDaCompra tr = itens.reversed.toList()[index];
                       return CardDeCompra(
                         itemDaCompra: tr,
                         onDelete: onDelete,
