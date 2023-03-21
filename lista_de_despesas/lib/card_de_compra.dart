@@ -46,6 +46,7 @@ class CardDeCompra extends StatelessWidget {
           child: Column(children: [
             Expanded(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Padding(
@@ -95,6 +96,9 @@ class CardDeCompra extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
+                    const SizedBox(
+                      width: 100,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 70),
                       child: IconButton(
@@ -111,6 +115,7 @@ class CardDeCompra extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 5),
                         child: Text(
                           'Qtdd:  ${itemDaCompra.quantidade}',
+                          style: const TextStyle(fontWeight: FontWeight.w800),
                         ),
                       ),
                     ),

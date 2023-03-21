@@ -44,16 +44,18 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  int? qtddItens;
+  int totalItens = 0;
   void adicionarItemDoCard(ItemDaCompra item) {
     setState(() {
       item.quantidade++;
+      totalItens = item.quantidade;
     });
   }
 
   void removerItemDoCard(ItemDaCompra item) {
     setState(() {
       item.quantidade--;
+      totalItens = item.quantidade;
     });
   }
 
@@ -109,12 +111,15 @@ class _HomePageState extends State<HomePage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    height: 40,
+                    height: 60,
                     width: 150,
                     color: Constants.kCorDoContainer,
                     child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text('R\$ ${valorTotal.toStringAsFixed(2)}'),
+                      padding: const EdgeInsets.only(left: 10, top: 17),
+                      child: Text(
+                        'R\$ ${valorTotal.toStringAsFixed(2)}',
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
                 ),
@@ -152,7 +157,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(
                 padding: const EdgeInsets.all(Constants.clearButtonSideSpace),
