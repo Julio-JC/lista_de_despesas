@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                     : Text('Tem ${itens.length} itens no carrinho'),
               ),
               const SizedBox(
-                width: 15,
+                width: 60,
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 10),
