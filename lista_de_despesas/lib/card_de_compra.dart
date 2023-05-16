@@ -77,56 +77,57 @@ class CardDeCompra extends StatelessWidget {
             ),
             Expanded(
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 30,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(5),
-                      child: Text(
-                        'R\$: ${itemDaCompra.valor.toStringAsFixed(2)}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(
+                      left: 30,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2,
                       ),
                     ),
-                    const SizedBox(
-                      width: 100,
+                    padding: const EdgeInsets.all(5),
+                    child: Text(
+                      'R\$: ${itemDaCompra.valor.toStringAsFixed(2)}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 70),
-                      child: IconButton(
-                        onPressed: adicionarItem,
-                        icon: const Icon(
-                          Icons.add,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        child: Text(
-                          'Qtdd:  ${itemDaCompra.quantidade}',
-                          style: const TextStyle(fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                    ),
-                    IconButton(
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 70),
+                    child: IconButton(
                       onPressed: !isSelected ? null : removerItem,
                       icon: const Icon(
                         Icons.minimize,
                         color: Colors.black,
                       ),
                     ),
-                  ]),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Text(
+                        'Qtdd:  ${itemDaCompra.quantidade}',
+                        style: const TextStyle(fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: adicionarItem,
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ]),
         ),

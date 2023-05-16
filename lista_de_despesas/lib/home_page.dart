@@ -87,44 +87,55 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: itens.length <= 1
-                    ? Text('Tem ${itens.length} item no carrinho')
-                    : Text('Tem ${itens.length} itens no carrinho'),
-              ),
-              const SizedBox(
-                width: 60,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text(
-                  'Valor Toral: ',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: itens.length <= 1
+                      ? Text('Tem ${itens.length} item no carrinho')
+                      : Text(
+                          'Tem ${itens.length} itens no carrinho',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Container(
-                    height: 60,
-                    width: 150,
-                    color: Constants.kCorDoContainer,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 17),
-                      child: Text(
-                        'R\$ ${valorTotal.toStringAsFixed(2)}',
-                        style: const TextStyle(fontSize: 20),
+                const SizedBox(
+                  width: 30,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    'Valor Toral: ',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      height: 60,
+                      width: 130,
+                      color: Constants.kCorDoContainer,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 17),
+                        child: Text(
+                          'R\$ ${valorTotal.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Expanded(
             child: Padding(
